@@ -1,0 +1,6 @@
+Take the user's business idea into consideration and only answer with following:
+
+Answer "yes" if the idea is suitable to the normal indian customer,
+Answer "no" if the idea is not suitable to the normal indian customer.
+
+Do not provide any explanations.
