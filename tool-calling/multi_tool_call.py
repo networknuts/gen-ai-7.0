@@ -21,6 +21,15 @@ def get_weather(zipcode):
     response = result.json()
     return response 
 
+# CREATE SECOND TOOL - GET ORDER STATUS
+def get_delivery_data(user_id):
+    url = f"http://localhost:8000/delivery/{user_id}"
+    result = requests.get(url)
+    if result.status_code != 200:
+        return {"Error": "User not found"}
+    else:
+        return result.json()
+
 # TOOL SCHEMA
 openai_tools = [
     {
@@ -36,6 +45,21 @@ openai_tools = [
                 },
             },
             "required": ["zipcode"],
+        }
+    },
+    {
+        "type": "function",
+        "name": "get_delivery_data",
+        "description": "Get delivery details for a user including item, delivery date and status.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer",
+                    "description": "The ID of the user (1,2,3)"
+                }
+            },
+            "required": ["user_id"],
         }
     }
 ]
@@ -57,8 +81,8 @@ for item in response.output:
         args = json.loads(item.arguments)
         if item.name == "get_weather":
             result = get_weather(args['zipcode'])
-            print("ORIGINAL FUNCTION OUTPUT\n")
-            print(result)
+        elif item.name == "get_delivery_data":
+            result = get_delivery_data(args['user_id'])
         else:
             result = "unknown function called"
 
