@@ -20,6 +20,8 @@ COLLECTION_NAME = "networknuts_c1"
 loader = PyPDFLoader(PDF_FILE)
 pdf_document = loader.load()
 
+print("Loaded document into text successfully!")
+
 
 # STEP 2: SPLIT TEXT INTO CHUNKS
 text_splitter = RecursiveCharacterTextSplitter(
@@ -28,10 +30,14 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 chunked_text = text_splitter.split_documents(pdf_document)
 
+print("Splitting completed")
+
 # STEP 3: CHOOSING YOUR EMBEDDING MODEL
 embeddings = OpenAIEmbeddings(
     model=EMBEDDING_MODEL
 )
+
+print("Embedding model initialized")
 
 # STEP 4: STORE EMBEDDINGS IN VECTOR DATABASE
 
